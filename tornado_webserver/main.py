@@ -5,11 +5,7 @@ import os
 from dotenv import load_dotenv
 from src import log
 
-DEVPLOYMENT = os.environ["DEVPLOYMENT"]
-
-if DEPLOPYMENT == "local":
-    load_dotenv("tornado_webserver/local.env")
-load_dotenv("tornado_webserver/stack.env")
+load_dotenv()
 
 PORT = int(os.environ["PORT"])
 logger = log.logging_func("webhook-server", log.logging.DEBUG)

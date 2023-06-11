@@ -3,7 +3,7 @@ services:
   tornado-webhook-server:
     container_name: "tornado-webhook-server"
     build: .
-    restart: always
+    restart: unless-stopped
     environment:
         TZ: Asia/Tokyo
     env_file:

@@ -4,6 +4,11 @@ import json
 import os
 from dotenv import load_dotenv
 from src import log
+
+DEVPLOYMENT = os.environ["DEVPLOYMENT"]
+
+if DEPLOPYMENT == "local":
+    load_dotenv("tornado_webserver/local.env")
 load_dotenv("tornado_webserver/stack.env")
 
 PORT = int(os.environ["PORT"])

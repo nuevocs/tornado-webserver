@@ -21,6 +21,11 @@ class WithingsNotify(tornado.web.RequestHandler):
         logger.debug(f"Here is a received DATA. {data}")
         self.write({'result': 'OK'})
 
+    async def get(self):
+        logger.debug(f"received GET request. {self.request.headers}")
+        self.write({'result': 'OK'})
+
+
 
 handlers = [
     (r"/withings", WithingsNotify),

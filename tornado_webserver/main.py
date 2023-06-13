@@ -13,8 +13,7 @@ logger = log.logging_func("webhook-server", log.logging.DEBUG)
 
 class WithingsNotify(tornado.web.RequestHandler):
     async def post(self):
-        if (self.request.headers.get("Content-Type")
-                != "application/json" or "application/x-www-form-urlencoded"):
+        if self.request.headers.get("Content-Type") != "application/x-www-form-urlencoded": # application/x-www-form-urlencoded
             raise [tornado.web.HTTPError(400),
                    logger.debug(f"Wrong content-type. {self.request.headers}")]
         logger.debug(f"Correct content-type. Here is a response Header. {self.request.headers}")
@@ -26,7 +25,6 @@ class WithingsNotify(tornado.web.RequestHandler):
 handlers = [
     (r"/withings", WithingsNotify),
 ]
-
 
 if __name__ == "__main__":
     application = tornado.web.Application(handlers)

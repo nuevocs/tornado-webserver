@@ -34,6 +34,11 @@ class CallBackCheck(tornado.web.RequestHandler):
         logger.debug(f"received POST request. {self.request.body}")
         self.write({'result': 'post'})
 
+    async def head(self):
+        logger.debug(f"received HEAD request. {self.request.headers}")
+        logger.debug(f"received HEAD request. {self.request.body}")
+        self.write({'result': 'head'})
+
 
 handlers = [
     (r"/withings", WithingsNotify),

@@ -17,10 +17,18 @@ class WithingsNotify(tornado.web.RequestHandler):
         logger.debug(f"Correct content-type. Here is a response Header. {self.request.headers}")
         # data = json.loads(self.request.body.decode('utf-8'))
         data = urllib.parse.parse_qs(self.request.body.decode('utf-8'))
-        logger.debug(f"Here is a received DATA. {data}")
+        # {'userid': ['14358221'], 'startdate': ['1687017803'], 'enddate': ['1687017804'], 'appli': ['1']}
+
+        userid = data.get('userid')[0]
+        startdate = data.get('startdate')[0]
+        enddate = data.get('enddate')[0]
+
+        logger.debug(f"the start date is {startdate} and the end date is {enddate}")
+
+        # logger.debug(f"Here is a received DATA. {data}")
 
 
-        logger.debug(f"Correct content-type. Here is a dict {self.request.__dict__}")
+        # logger.debug(f"Correct content-type. Here is a dict {self.request.__dict__}")
 
 
         self.write({'result': 'OK'})

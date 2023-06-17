@@ -16,6 +16,8 @@ class WithingsNotify(tornado.web.RequestHandler):
         logger.debug(f"Correct content-type. Here is a response Header. {self.request.headers}")
         data = json.loads(self.request.body)
         logger.debug(f"Here is a received DATA. {data}")
+        logger.debug(f"Here is a body {self.request.body}")
+
         self.write({'result': 'OK'})
 
     async def get(self):

@@ -1,6 +1,7 @@
 import tornado.ioloop
 import tornado.web
 import json
+import urllib.parse
 from src import log
 from src.constant import PORT
 
@@ -14,16 +15,13 @@ class WithingsNotify(tornado.web.RequestHandler):
             raise [tornado.web.HTTPError(400),
                    logger.debug(f"Wrong content-type. {self.request.headers}")]
         logger.debug(f"Correct content-type. Here is a response Header. {self.request.headers}")
-        # logger.debug(f"Correct content-type. Here is a dict {self.request.__dict__}")
-        data = json.loads(self.request.body.decode('utf-8'))
+        # data = json.loads(self.request.body.decode('utf-8'))
+        data = urllib.parse.parse_qs(self.request.body.decode('utf-8'))
         logger.debug(f"Here is a received DATA. {data}")
-        logger.debug(self.request.arguments.values)
-        logger.debug(f" arguments here. {self.get_arguments()}")
-        logger.debug(self.get_arguments('userid'))
-        logger.debug(f" argument here. {self.get_argument()}")
-        logger.debug(self.get_argument('userid'))
 
-        logger.debug(f"here is args. {self.request.__dict__['arguments']}")
+
+        logger.debug(f"Correct content-type. Here is a dict {self.request.__dict__}")
+
 
         self.write({'result': 'OK'})
 

@@ -23,8 +23,6 @@ class WithingsNotify(tornado.web.RequestHandler):
         logger.debug(f" argument here. {self.get_argument()}")
         logger.debug(self.get_argument('userid'))
 
-        logger.debug(f"Here is a arg {self.request.arguments.}")
-        logger.debug(f"This is your user id. {self.request.arguments.get('userid')}")
 
 
         self.write({'result': 'OK'})

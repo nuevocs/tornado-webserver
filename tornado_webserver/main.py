@@ -22,21 +22,26 @@ class WithingsNotify(tornado.web.RequestHandler):
         logger.debug(f"received GET request. {self.request.headers}")
         self.write({'result': 'OK'})
 
+    async def head(self):
+        logger.debug(f"received HEAD headers. {self.request.headers}")
+        logger.debug(f"received HEAD body. {self.request.body}")
+        self.write({'result': 'head'})
+
 
 class CallBackCheck(tornado.web.RequestHandler):
     async def get(self):
-        logger.debug(f"received GET request. {self.request.headers}")
-        logger.debug(f"received GET request. {self.request.body}")
+        logger.debug(f"received GET headers. {self.request.headers}")
+        logger.debug(f"received GET body. {self.request.body}")
         self.write({'result': 'get'})
 
     async def post(self):
-        logger.debug(f"received POST request. {self.request.headers}")
-        logger.debug(f"received POST request. {self.request.body}")
+        logger.debug(f"received POST headers. {self.request.headers}")
+        logger.debug(f"received POST body. {self.request.body}")
         self.write({'result': 'post'})
 
     async def head(self):
-        logger.debug(f"received HEAD request. {self.request.headers}")
-        logger.debug(f"received HEAD request. {self.request.body}")
+        logger.debug(f"received HEAD headers. {self.request.headers}")
+        logger.debug(f"received HEAD body. {self.request.body}")
         self.write({'result': 'head'})
 
 

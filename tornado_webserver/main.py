@@ -15,9 +15,15 @@ class WithingsNotify(tornado.web.RequestHandler):
                    logger.debug(f"Wrong content-type. {self.request.headers}")]
         logger.debug(f"Correct content-type. Here is a response Header. {self.request.headers}")
         # logger.debug(f"Correct content-type. Here is a dict {self.request.__dict__}")
-        data = json.loads(self.request.body())
+        data = json.loads(self.request.body.decode('utf-8'))
         logger.debug(f"Here is a received DATA. {data}")
-        logger.debug(f"Here is a arg {self.request.arguments()}")
+
+        logger.debug(f" arguments here. {self.get_arguments()}")
+        logger.debug(self.get_arguments('userid'))
+        logger.debug(f" argument here. {self.get_argument()}")
+        logger.debug(self.get_argument('userid'))
+
+        logger.debug(f"Here is a arg {self.request.arguments.}")
         logger.debug(f"This is your user id. {self.request.arguments.get('userid')}")
 
 

@@ -17,6 +17,12 @@ class WithingsNotify(tornado.web.RequestHandler):
         data = json.loads(self.request.body)
         logger.debug(f"Here is a received DATA. {data}")
         logger.debug(f"Here is a body {self.request.body}")
+        logger.debug(f"Here is a uri {self.request.uri}")
+        logger.debug(f"Here is a body arguments {self.request.body_arguments}")
+        logger.debug(f"Here is a arg {self.request.arguments}")
+        logger.debug(f"Here is a query {self.request.query}")
+        logger.debug(f"Here is a query arg {self.request.query_arguments}")
+
 
         self.write({'result': 'OK'})
 

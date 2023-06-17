@@ -1,19 +1,16 @@
 import tornado.ioloop
 import tornado.web
 import json
-import os
-from dotenv import load_dotenv
 from src import log
+from src.constant import PORT
 
-load_dotenv()
-
-PORT = int(os.environ["PORT"])
 logger = log.logging_func("webhook-server", log.logging.DEBUG)
 
 
 class WithingsNotify(tornado.web.RequestHandler):
     async def post(self):
-        if self.request.headers.get("Content-Type") != "application/x-www-form-urlencoded": # application/x-www-form-urlencoded
+        if self.request.headers.get(
+                "Content-Type") != "application/x-www-form-urlencoded":  # application/x-www-form-urlencoded
             raise [tornado.web.HTTPError(400),
                    logger.debug(f"Wrong content-type. {self.request.headers}")]
         logger.debug(f"Correct content-type. Here is a response Header. {self.request.headers}")
@@ -26,9 +23,21 @@ class WithingsNotify(tornado.web.RequestHandler):
         self.write({'result': 'OK'})
 
 
+class CallBackCheck(tornado.web.RequestHandler):
+    async def get(self):
+        logger.debug(f"received GET request. {self.request.headers}")
+        logger.debug(f"received GET request. {self.request.body}")
+        self.write({'result': 'get'})
+
+    async def post(self):
+        logger.debug(f"received POST request. {self.request.headers}")
+        logger.debug(f"received POST request. {self.request.body}")
+        self.write({'result': 'post'})
+
 
 handlers = [
     (r"/withings", WithingsNotify),
+    (r"/callback", CallBackCheck),
 ]
 
 if __name__ == "__main__":

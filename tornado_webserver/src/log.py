@@ -1,9 +1,7 @@
 import logging
 from logging.handlers import SysLogHandler
 import os
-
-PAPERTRAIL_HOST: str = os.environ["PAPERTRAIL_HOST"]
-PAPERTRAIL_PORT: int = int(os.environ["PAPERTRAIL_PORT"])
+from src.constant import PAPERTRAIL_HOST, PAPERTRAIL_PORT
 
 
 def logging_func(logger_name: str, level: int) -> logging.Logger:

@@ -17,7 +17,7 @@ class WithingsNotify(tornado.web.RequestHandler):
         # logger.debug(f"Correct content-type. Here is a dict {self.request.__dict__}")
         data = json.loads(self.request.body.decode('utf-8'))
         logger.debug(f"Here is a received DATA. {data}")
-
+        logger.debug(self.request.arguments.values)
         logger.debug(f" arguments here. {self.get_arguments()}")
         logger.debug(self.get_arguments('userid'))
         logger.debug(f" argument here. {self.get_argument()}")

@@ -4,6 +4,7 @@ import json
 import urllib.parse
 from src import log
 from src.constant import PORT
+from src.withings.withings_getmeas import WithingsApi, WithingsMeasure
 
 logger = log.logging_func("webhook-server", log.logging.DEBUG)
 
@@ -19,17 +20,23 @@ class WithingsNotify(tornado.web.RequestHandler):
         data = urllib.parse.parse_qs(self.request.body.decode('utf-8'))
         # {'userid': ['14358221'], 'startdate': ['1687017803'], 'enddate': ['1687017804'], 'appli': ['1']}
 
-        userid = data.get('userid')[0]
+        # userid = data.get('userid')[0]
         startdate = data.get('startdate')[0]
         enddate = data.get('enddate')[0]
-
         logger.debug(f"the start date is {startdate} and the end date is {enddate}")
 
-        # logger.debug(f"Here is a received DATA. {data}")
-
-
-        # logger.debug(f"Correct content-type. Here is a dict {self.request.__dict__}")
-
+        withings_api = WithingsApi("src/withings/config.json")
+        withings_api.check_token()
+        access_token = withings_api.access_token
+        withings_measure = WithingsMeasure(access_token)
+        withings_measure.get_measure(
+            action="getmeas",
+            # meastype="1,5",
+            meastype=1,
+            category=1,
+            startdate=startdate,
+            enddate=enddate
+        )
 
         self.write({'result': 'OK'})
 

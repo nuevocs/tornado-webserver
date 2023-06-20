@@ -21,7 +21,7 @@ client_secret = WITHINGS_CLIENT_SECRET
 
 oath2_url = "https://wbsapi.withings.net/v2/oauth2"
 
-logging = log.logging_func("withings-api", log.logging.DEBUG)
+logging = log.logging_func("withings-api", log.logging.INFO)
 logging.debug("A script starts...")
 
 
@@ -48,11 +48,11 @@ class WithingsApi:
         logging.debug(f"expected_expired - now_epoch: it should be 3 hours / 10800 se\
                       c{expected_expired - current_time}")
         if expected_expired < current_time:
-            logging.debug("refreshing token...")
+            logging.info("refreshing token...")
             self.refresh_token(refresh_token, refresh_token)
         else:
             self.access_token = tokens["body"]["access_token"]
-            logging.debug(f"valid access_token: {self.access_token}")
+            logging.info(f"valid access_token: {self.access_token}")
             return self.access_token
 
     def refresh_token(self, refresh_token: str, expired_access_token: str) -> None:
@@ -74,15 +74,15 @@ class WithingsApi:
         if refresh_token_post.status_code == 200:
             refreshed_tokens = refresh_token_post.json()
             refreshed_tokens["body"]["retrieved_datetime"] = int(time.time())
-            logging.debug("refresh token success")
+            logging.info("refresh token success")
             logging.debug(refreshed_tokens)
             with open(self.path, 'w') as f:
                 json.dump(refreshed_tokens, f)
             self.access_token = refreshed_tokens["body"]["access_token"]
-            logging.debug(f"new access_token: {self.access_token}")
+            logging.info(f"new access_token: {self.access_token}")
             return self.access_token
         else:
-            logging.debug("refresh token failed")
+            logging.info("refresh token failed")
 
     def get_token(self) -> None:
         pass
@@ -116,7 +116,7 @@ class WithingsMeasure:
             logging.debug(r.json())
             r = r.json()
             measured_response = r["body"]["measuregrps"]
-            logging.debug(f"You have received {len(measured_response)} items.")
+            logging.info(f"You have received {len(measured_response)} items.")
 
             lst = []
 
@@ -137,6 +137,6 @@ class WithingsMeasure:
                         key=f"{grpid}{device_id[:5]}{v['type']}"
                     )
                     lst.append(meas_data)
-                    logging.debug(f"measure data -   {meas_data}")
+                    logging.info(f"measure data -   {meas_data}")
 
 

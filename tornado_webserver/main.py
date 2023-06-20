@@ -31,8 +31,7 @@ class WithingsNotify(tornado.web.RequestHandler):
         withings_measure = WithingsMeasure(access_token)
         withings_measure.get_measure(
             action="getmeas",
-            # meastype="1,5",
-            meastype=1,
+            meastype="1,5",
             category=1,
             startdate=startdate,
             enddate=enddate
